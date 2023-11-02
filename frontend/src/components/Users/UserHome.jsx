@@ -82,7 +82,7 @@ export default function UserHome() {
       const timeDifference = new Date(deadline.endDate) - new Date(deadline.startDate)
       const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
       const TaskData = { ...formData, deadline: { ...deadline, }, total_days: daysDifference };
-      axios.post('http://localhost:5051/userHome', TaskData, { headers: { Authorization: `Bearer ${token}` } })
+      axios.post('http://localhost:4000/userHome', TaskData, { headers: { Authorization: `Bearer ${token}` } })
         .then(res => {
           if (res.data.Status === "Success") {
             setFormData({
@@ -114,11 +114,11 @@ export default function UserHome() {
 
   axios.defaults.withCredentials = true;
   useEffect(() => {
-    axios.get('http://localhost:5051/userHome', { headers: { Authorization: `Bearer ${token}` } })
+    axios.get('http://localhost:4000/userHome', { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
         if (res.data.Status === "Success") {
-          setName(res.data.user_name);
-          setStoreData(res.data.data)
+          setName(res.data.data[0].name);
+          setStoreData(res.data.tasks)
         } else {
           navigate('/userLogin');
           localStorage.removeItem("userData")
@@ -136,10 +136,11 @@ export default function UserHome() {
 
   const handleDeleteTask = (e) => {
     const { id } = e.target;
-    axios.post(`http://localhost:5051/delete`, { deleteId: id })
+    axios.post(`http://localhost:4000/delete`, { deleteId: id })
       .then(res => {
+        console.log(res.data.message)
         if (res.data.message === "task delete successfully") {
-          notification.error({ description: 'your task not deleted' })
+          notification.error({ description: 'your task deleted successfully' })
           navigate('/userHome')
         }
         else {
@@ -149,7 +150,7 @@ export default function UserHome() {
       })
   }
   const filteredList = storeData.filter((item) => {
-    return item.task_name.toLowerCase().includes(searchText.toLowerCase());
+    return item.taskName.toLowerCase().includes(searchText.toLowerCase());
   });
 
   // const handleStartDateChange = (date, dateString) => {
@@ -238,15 +239,15 @@ export default function UserHome() {
           filteredList.length > 0 ? (
             filteredList.map((item, index) =>
               <div key={index} className='taskContainer'>
-                <p><span className='text-white'>Task Name : </span>{item.task_name}</p>
+                <p><span className='text-white'>Task Name : </span>{item.taskName}</p>
                 <p><span className='text-white'>Description : </span>{item.description}</p>
                 <p><span className='text-white'>Status: </span>{item.status}</p>
                 <p><span className='text-white'>Started On : </span>{item.deadline_start}</p>
                 <p><span className='text-white'>Ended On : </span>{item.deadline_end}</p>
                 <div className='d-flex justify-content-start gap-3'>
                   <p className='text-white'>{item.total_days >= 2 ? 'TotalDays' : 'TotalDay'}:</p><span className={item.total_days > 2 ? 'text-success' : 'text-danger'}>{item.total_days}</span>
-                  <Link to={`/userHome/${item.id}`}><button type="button" id={item.id} className="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Delete</button></Link>
-                  <Link to={`/userHome/editTask/${item.id}`}><button id={item.id} className='btn btn-outline-success btn-sm'>Edit</button></Link>
+                  <Link to={`/userHome/${item._id}`}><button type="button" id={item._id} className="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Delete</button></Link>
+                  <Link to={`/userHome/editTask/${item._id}`}><button id={item._id} className='btn btn-outline-success btn-sm'>Edit</button></Link>
                 </div>
               </div>
             )) : (

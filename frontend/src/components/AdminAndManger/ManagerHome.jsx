@@ -16,12 +16,13 @@ export default function ManagerHome() {
   axios.defaults.withCredentials = true;
 
   useEffect(() => {
-    axios.get("http://localhost:5051/managerHome", { headers: { Authorization: `Bearer ${token}` } })
+    axios.get("http://localhost:4000/managerHome", { headers: { Authorization: `Bearer ${token}` } })
       .then(res => {
+        console.log(res.data)
         if (res.data.Status === "Success") {
-          setName(res.data.name)
-          setId(res.data.id)
-          setUsers(res.data.data)
+          setName(res.data.data[0].name)
+          setId(res.data.data[0]._id)
+          setUsers(res.data.AssignData)
           navigate('/managerHome')
         }
         else {
@@ -38,7 +39,7 @@ export default function ManagerHome() {
     navigate('/adminOrManagerLogin')
   }
   const filteredList = userList.filter((item) => {
-    return item.user_name.toLowerCase().includes(searchText.toLowerCase());
+    return item.name.toLowerCase().includes(searchText.toLowerCase());
   });
 
   return (
@@ -70,10 +71,10 @@ export default function ManagerHome() {
                 filteredList.map((item, index) => {
                   return (
                     <tr key={index}>
-                      <th scope="row">{item.id}</th>
-                      <td>{item.user_name}</td>
+                      <th scope="row">{index+1}</th>
+                      <td>{item.name}</td>
                       <td>{item.email}</td>
-                      <td><Link to={`/managerHome/viewTasks/${item.id}`}><button className='btn btn-outline-success btn-sm' id={item.id} data-set={managerId}>View Task</button></Link></td>
+                      <td><Link to={`/managerHome/viewTasks/${item._id}`}><button className='btn btn-outline-success btn-sm' id={item._id} data-set={managerId}>View Task</button></Link></td>
                     </tr>
                   )
                 }) : (  

@@ -9,10 +9,10 @@ export default function AdminHome() {
   const [name, setAdminName] = useState('')
   const navigate = useNavigate();
   useEffect(() => {
-    axios.get('http://localhost:5051/adminHome', { headers: { Authorization: `Bearer ${token}` } })
+    axios.get('http://localhost:4000/adminHome', { headers: { Authorization: `Bearer ${token}` } })
       .then(res => {
         if (res.data.Status === "Success") {
-          setAdminName(res.data.name)
+          setAdminName(res.data.data[0].name)
         }
         else {
           localStorage.removeItem("userData")

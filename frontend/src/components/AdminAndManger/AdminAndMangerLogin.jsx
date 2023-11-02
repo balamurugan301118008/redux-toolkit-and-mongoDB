@@ -55,7 +55,7 @@ export default function AdminAndMangerLogin() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            axios.post('http://localhost:5051/adminOrManagerLogin', formData)
+            axios.post('http://localhost:4000/adminOrManagerLogin', formData)
                 .then(res => {
                     if (res.data.Status === "Success" && res.data.role === "Admin") {
                         notification.success({ description: "You're Successfully Logged" })

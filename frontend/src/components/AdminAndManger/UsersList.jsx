@@ -7,7 +7,7 @@ export default function UsersList() {
     const [searchText, setSearchText] = useState('')
     const navigate = useNavigate()
     useEffect(() => {
-        axios.get('http://localhost:5051/adminHome/usersList')
+        axios.get('http://localhost:4000/adminHome/usersList')
             .then(res => {
                 if (res.data.Status === "Success") {
                     setUserList(res.data.data)
@@ -25,7 +25,7 @@ export default function UsersList() {
         navigate(`/adminHome/usersList/viewTasks/${id}`)
     }
     const filteredList = userList.filter((item) => {
-        return item.user_name.toLowerCase().includes(searchText.toLowerCase());
+        return item.name.toLowerCase().includes(searchText.toLowerCase());
     });
     return (
         <div>
@@ -54,10 +54,10 @@ export default function UsersList() {
                                 filteredList.map((item, index) => {
                                     return (
                                         <tr key={index}>
-                                            <th scope="row">{item.id}</th>
-                                            <td>{item.user_name}</td>
+                                            <th scope="row">{index+1}</th>
+                                            <td>{item.name}</td>
                                             <td>{item.email}</td>
-                                            <td><button className='btn btn-outline-success btn-sm' onClick={handleViewTask} id={item.id}>View Task</button></td>
+                                            <td><button className='btn btn-outline-success btn-sm' onClick={handleViewTask} id={item._id}>View Task</button></td>
                                         </tr>
                                     )
                                 }) : (
