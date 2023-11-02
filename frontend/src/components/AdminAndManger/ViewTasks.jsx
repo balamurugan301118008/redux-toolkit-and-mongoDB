@@ -60,7 +60,7 @@ export default function ViewTasks() {
         if (validate()) {
             const TaskData = { ...formData, deadline: { ...deadline } };
             console.log(TaskData);
-            axios.post(`http://localhost:5051/managerHome/viewTasks/${id}`, TaskData, { headers: { Authorization: `Bearer ${token}` } })
+            axios.post(`http://localhost:4000/managerHome/viewTasks/${id}`, TaskData, { headers: { Authorization: `Bearer ${token}` } })
                 .then(res => {
                     if (res.data.Status === "Success") {
                         setFormData({
@@ -83,7 +83,7 @@ export default function ViewTasks() {
         }
     }
     useEffect(() => {
-        axios.get(`http://localhost:5051/managerHome/viewTasks/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+        axios.get(`http://localhost:4000/managerHome/viewTasks/${id}`, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
                 if (res.data.Status === "Success") {
                     setTaskList(res.data.data)
@@ -97,7 +97,7 @@ export default function ViewTasks() {
     }, [taskList]);
     const handleDeleteTask = (e) => {
         const { id } = e.target;
-        axios.post(`http://localhost:5051/delete`, { deleteId: id })
+        axios.post(`http://localhost:4000/delete`, { deleteId: id })
             .then(res => {
                 if (res.data.message === "task delete successfully") {
                     notification.error({ description: 'your task successfully deleted' })
@@ -109,7 +109,7 @@ export default function ViewTasks() {
     }
 
     const filteredList = taskList.filter((item) => {
-        return item.task_name.toLowerCase().includes(searchText.toLowerCase());
+        return item.taskName.toLowerCase().includes(searchText.toLowerCase());
     });
     const handleDateChange = (date, dateString) => {
         setDeadline({ ...deadline, startDate: dateString[0], endDate: dateString[1] })
@@ -133,12 +133,12 @@ export default function ViewTasks() {
                 {
                     filteredList.length > 0 ? filteredList.map((item, index) =>
                         <div key={index} className='taskContainer'>
-                            <p><span className='text-white'>Task Name : </span>{item.task_name}</p>
+                            <p><span className='text-white'>Task Name : </span>{item.taskName}</p>
                             <p><span className='text-white'>Description : </span>{item.description}</p>
                             <p><span className='text-white'>Status: </span>{item.status}</p>
                             <p><span className='text-white'>Started On : </span>{item.deadline_start}</p>
                             <p><span className='text-white'>Ended On : </span>{item.deadline_end}</p>
-                            <button onClick={handleDeleteTask} id={item.id} className='btn btn-outline-danger btn-sm'>Delete</button>
+                            <button onClick={handleDeleteTask} id={item._id} className='btn btn-outline-danger btn-sm'>Delete</button>
                         </div>
                     ) : (<div>
                         <h4 className='text-danger'>{searchText} not found</h4>

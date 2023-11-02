@@ -29,9 +29,9 @@ function EditTask() {
     // }
 
     useEffect(() => {
-        axios.get(`http://localhost:5051/userHome/editTask/${id}`)
+        axios.get(`http://localhost:4000/userHome/editTask/${id}`)
             .then((response) => {
-                setTaskName(response.data.data[0].task_name);
+                setTaskName(response.data.data[0].taskName);
                 setDescription(response.data.data[0].description);
                 setTaskStatus(response.data.data[0].status)
             })
@@ -47,7 +47,7 @@ function EditTask() {
         //     console.log("taskname is required");
         // }
         // else {
-        axios.post(`http://localhost:5051/userHome/editTask/${id}`, { taskName: taskName, description: description, status: status })
+        axios.post(`http://localhost:4000/userHome/editTask/${id}`, { taskName: taskName, description: description, status: status })
             .then(res => {
                 if (res.data.Status == "Success") {
                     notification.success({ description: 'Your Task Successfully Updated' })
