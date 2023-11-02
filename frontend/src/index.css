@@ -1,0 +1,154 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #97dbf7;
+}
+
+
+.container {
+  background-color: skyblue;
+  border-radius: 10px;
+  margin: 3pc auto;
+  padding: 15px 50px;
+  width: 40%;
+}
+
+
+button.close {
+  border-style: none;
+  background-color: white;
+}
+
+button.close:hover {
+  color: rgb(236, 102, 102);
+}
+
+.signUp::selection {
+  color: white;
+  background-color: black;
+}
+
+span.closePopHub {
+  font-size: 28px;
+}
+
+
+
+
+/* select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+} 
+
+option {
+  background-color: #f9f9f9;
+  color: #333;
+  font-size: 14px;
+  border-style: none;
+  border-radius: 10px;
+} */
+.error {
+  color: red;
+  position: relative;
+  top: 2px;
+  left: 4px;
+}
+
+.taskMainContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: start;
+  row-gap: 27px;
+  column-gap: 78px;
+  margin: 29px auto;
+  padding: 0px 49px;
+}
+
+
+.taskContainer {
+  height: auto;
+  width: 25%;
+  background-color: turquoise;
+  padding: 10px 10px;
+  border-radius: 5px;
+  /* overflow-y: scroll; */
+}
+
+/* 
+.signUp::selection {
+  color: red;
+  background-color: darkmagenta;
+} */
+
+/* .form-control:focus {
+  border-style: none;
+  border-color: white;
+}
+
+li {
+  list-style: none;
+}
+
+form {
+  margin: 37px auto;
+}
+
+.dataContainer {
+  display: grid;
+  justify-items: start;
+  place-content: center;
+}
+
+ul {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 45px;
+  padding: 24px 76px;
+} */
+
+/* button {
+  margin: 18px 66px;
+  height: 36px;
+  width: 85px;
+  font-size: 18px;
+  color: #ced9eb;
+  background-color: #506380;
+  border-style: none;
+  border-radius: 2px;
+} */
+
+/* button:hover {
+  opacity: 0.9;
+  cursor: pointer;
+} */
+
+/* input {
+  width: 300px;
+  height: 30px;
+
+  margin: 10px auto;
+  padding: 5px 4px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  color: #333;
+  outline: none;
+}
+
+input:focus {
+  border-color: #007bff;
+  box-shadow: 2px 2px 5px rgba(0, 123, 255, 0.5);
+} */
