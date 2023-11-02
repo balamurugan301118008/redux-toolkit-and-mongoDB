@@ -230,7 +230,7 @@ export default function UserHome() {
             onChange={handleDateChange}
           /> */}
 
-          <DatePicker.RangePicker showTime onChange={handleDateChange} />
+          {/* <DatePicker.RangePicker showTime onChange={handleDateChange} /> */}
 
         </div>
       </Modal>
@@ -242,10 +242,11 @@ export default function UserHome() {
                 <p><span className='text-white'>Task Name : </span>{item.taskName}</p>
                 <p><span className='text-white'>Description : </span>{item.description}</p>
                 <p><span className='text-white'>Status: </span>{item.status}</p>
-                <p><span className='text-white'>Started On : </span>{item.deadline_start}</p>
-                <p><span className='text-white'>Ended On : </span>{item.deadline_end}</p>
+                <p><span className='text-white'>Started On : </span>{item.startedAt}</p>
+                <p><span className='text-white'>Ended On : </span>{item.endedAt}</p>
+                {/* <p><span className='text-white'>TimeLimit On : </span>{} days</p> */}
                 <div className='d-flex justify-content-start gap-3'>
-                  <p className='text-white'>{item.total_days >= 2 ? 'TotalDays' : 'TotalDay'}:</p><span className={item.total_days > 2 ? 'text-success' : 'text-danger'}>{item.total_days}</span>
+                  <p className='text-white'>{item.timeLimit >= 2 ? 'TotalDays' : 'TotalDay'}:</p><span className={item.timeLimit > 2 ? 'text-success' : 'text-danger'}>{item.timeLimit}</span>
                   <Link to={`/userHome/${item._id}`}><button type="button" id={item._id} className="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Delete</button></Link>
                   <Link to={`/userHome/editTask/${item._id}`}><button id={item._id} className='btn btn-outline-success btn-sm'>Edit</button></Link>
                 </div>

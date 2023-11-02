@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 // const json = app.json();
-
 app.use(express.json());
 app.use(cors({
     origin: ['http://localhost:5173'],

@@ -58,8 +58,11 @@ export default function ViewTasks() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            const TaskData = { ...formData, deadline: { ...deadline } };
-            console.log(TaskData);
+            const timeDifference = new Date(deadline.endDate) - new Date(deadline.startDate)
+            const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+            const TaskData = { ...formData, deadline: { ...deadline, }, timeLimit: daysDifference };
+            // const TaskData = { ...formData, deadline: { ...deadline } };
+            // console.log(TaskData);
             axios.post(`http://localhost:4000/managerHome/viewTasks/${id}`, TaskData, { headers: { Authorization: `Bearer ${token}` } })
                 .then(res => {
                     if (res.data.Status === "Success") {
@@ -109,7 +112,7 @@ export default function ViewTasks() {
     }
 
     const filteredList = taskList.filter((item) => {
-        return item.taskName.toLowerCase().includes(searchText.toLowerCase());
+        return item.taskName.toLowerCase().includes(searchText.toLowerCase()) || item.description.toLowerCase().includes(searchText.toLowerCase());
     });
     const handleDateChange = (date, dateString) => {
         setDeadline({ ...deadline, startDate: dateString[0], endDate: dateString[1] })
@@ -136,8 +139,9 @@ export default function ViewTasks() {
                             <p><span className='text-white'>Task Name : </span>{item.taskName}</p>
                             <p><span className='text-white'>Description : </span>{item.description}</p>
                             <p><span className='text-white'>Status: </span>{item.status}</p>
-                            <p><span className='text-white'>Started On : </span>{item.deadline_start}</p>
-                            <p><span className='text-white'>Ended On : </span>{item.deadline_end}</p>
+                            <p><span className='text-white'>Started On : </span>{item.startedAt}</p>
+                            <p><span className='text-white'>Ended On : </span>{item.endedAt}</p>
+                            <p><span className='text-white'>TimeLimit:</span> {item.timeLimit} days</p>
                             <button onClick={handleDeleteTask} id={item._id} className='btn btn-outline-danger btn-sm'>Delete</button>
                         </div>
                     ) : (<div>
