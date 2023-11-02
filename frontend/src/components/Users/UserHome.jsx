@@ -75,6 +75,7 @@ export default function UserHome() {
   //     status: '',
   //   });
   // }
+  // Here are the handlesubmit function 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
