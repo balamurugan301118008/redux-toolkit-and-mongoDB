@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios';
-import { Button, Modal } from "antd";
+import { Button, Modal, DatePicker, notification } from "antd";
 import { useSelector } from 'react-redux';
 export default function ViewTasksByAdmin() {
     const token = useSelector((state) => state.userData.initialState.token)
@@ -10,6 +10,10 @@ export default function ViewTasksByAdmin() {
     const [searchText, setSearchText] = useState('')
     const { user_id } = useParams();
     const navigate = useNavigate();
+    const [deadline, setDeadline] = useState({
+        startDate: '',
+        endDate: ''
+    });
 
     const [formData, setFormData] = useState({
         taskName: '',
@@ -20,6 +24,7 @@ export default function ViewTasksByAdmin() {
     const [errors, setErrors] = useState({
         taskName: '',
         description: '',
+        status: '',
     });
 
     const showModal = () => {
@@ -53,10 +58,19 @@ export default function ViewTasksByAdmin() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            axios.post(`http://localhost:4000/adminHome/usersList/viewTasks/${user_id}`, formData, { headers: { Authorization: `Bearer ${token}` } })
+            const timeDifference = new Date(deadline.endDate) - new Date(deadline.startDate)
+            const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+            const TaskData = { ...formData, deadline: { ...deadline, }, timeLimit: daysDifference };
+            axios.post(`http://localhost:4000/adminHome/usersList/viewTasks/${user_id}`, TaskData, { headers: { Authorization: `Bearer ${token}` } })
                 .then(res => {
                     if (res.data.Status === "Success") {
                         setMessage(res.data.Status);
+                        setFormData({
+                            taskName: '',
+                            description: '',
+                            status: '',
+                        })
+                        notification.success({ description: 'Task Successfully added for the user' })
                     }
                     else {
                         alert(res.data.Error)
@@ -99,6 +113,10 @@ export default function ViewTasksByAdmin() {
     const filteredList = taskList.filter((item) => {
         return item.taskName.toLowerCase().includes(searchText.toLowerCase());
     });
+    const handleDateChange = (date, dateString) => {
+        setDeadline({ ...deadline, startDate: dateString[0], endDate: dateString[1] })
+        // console.log("dateString----------", dateString);
+    };
     return (
         <div>
             <div className='d-flex justify-content-around p-3'>
@@ -117,10 +135,13 @@ export default function ViewTasksByAdmin() {
                 {
                     filteredList.length > 0 ? (
                         filteredList.map((item, index) =>
-                            <div key={index+1} className='taskContainer'>
+                            <div key={index + 1} className='taskContainer'>
                                 <p><span className='text-white'>Task Name : </span>{item.taskName}</p>
                                 <p><span className='text-white'>Description : </span>{item.description}</p>
                                 <p><span className='text-white'>Status: </span>{item.status}</p>
+                                <p><span className='text-white'>StartDate: </span>{item.startedAt}</p>
+                                <p><span className='text-white'>EndDate: </span>{item.endedAt}</p>
+                                <p><span className='text-white'>Timelimit: </span>{item.timeLimit} days</p>
                                 {/* <Link to={`/adminHome/usersList/viewTasks/${item.id}`}><button type="button" id={item.id} className="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Delete</button></Link> */}
                                 <button onClick={handleDeleteTask} id={item._id} className='btn btn-outline-danger btn-sm'>Delete</button>
                             </div>
@@ -150,6 +171,9 @@ export default function ViewTasksByAdmin() {
                             <option value="Completed">Completed</option>
                         </select>
                         <label htmlFor="floatingSelect">Role Type</label>
+                    </div>
+                    <div>
+                        <DatePicker.RangePicker showTime onChange={handleDateChange} />
                     </div>
                 </Modal>
             </div>

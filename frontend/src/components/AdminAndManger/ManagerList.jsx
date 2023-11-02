@@ -47,7 +47,7 @@ export default function ManagerList() {
                                             <th>{index+1}</th>
                                             <td>{item.name}</td>
                                             <td>{item.email}</td>
-                                            <td><Link to={`/adminHome/managerList/userList/${item.id}`}><button className='btn btn-outline-success btn-sm' id={item.id}>Assign User</button></Link></td>
+                                            <td><Link to={`/adminHome/managerList/userList/${item._id}`}><button className='btn btn-outline-success btn-sm' id={item._id}>Assign User</button></Link></td>
                                         </tr>
                                     )
                                 }) : (

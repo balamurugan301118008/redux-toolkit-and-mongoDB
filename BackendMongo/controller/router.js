@@ -173,6 +173,8 @@ Router.get('/userHome', verifyUser, async (req, res) => {
 
 Router.post('/userHome', verifyUser, async (req, res) => {
     const userId = Object(req.id);
+    // console.log("userId----",userId);
+    // console.log("data---------------",req.bo);
     let formData = {
         taskName: req.body.taskName,
         description: req.body.description,
@@ -225,17 +227,27 @@ Router.post('/managerHome/viewTasks/:id', verifyUser, async (req, res) => {
     const userId = req.params.id;
     const managerId = req.id;
 
+    console.log(req.body);
+
     const formData = {
         taskName: req.body.taskName,
         description: req.body.description,
         status: req.body.status,
+        startedAt: req.body.deadline.startDate,
+        endedAt: req.body.deadline.endDate,
+        timeLimit: req.body.timeLimit,
         userId: userId,
         addedBy: managerId,
     }
 
     const newTask = new userTasks(formData);
     const register = await newTask.save();
-    console.log(register);
+    if (!register) {
+        res.send({ Error: "Registering task throwing error" })
+    }
+    else {
+        res.send({ data: register, Status: "Success" })
+    }
 })
 
 Router.get('/adminHome/usersList', async (req, res) => {
@@ -267,6 +279,9 @@ Router.post('/adminHome/usersList/viewTasks/:id', verifyUser, async (req, res) =
         taskName: req.body.taskName,
         description: req.body.description,
         status: req.body.status,
+        startedAt: req.body.deadline.startDate,
+        endedAt: req.body.deadline.endDate,
+        timeLimit: req.body.timeLimit,
         userId: userId,
         addedBy: adminId,
     };
