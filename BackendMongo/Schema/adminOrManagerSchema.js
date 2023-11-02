@@ -5,7 +5,7 @@ const adminOrManagerColumn = mongoose.Schema({
     role: String,
     userId: {
         type: Array,
-        default:null
+        default: null
     },
     email: String,
     password: String,
