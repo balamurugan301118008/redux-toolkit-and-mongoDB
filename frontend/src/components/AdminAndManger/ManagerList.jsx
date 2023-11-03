@@ -6,7 +6,7 @@ export default function ManagerList() {
     const [managerList, setManagers] = useState([]);
     const [searchText, setSearchText] = useState('')
     useEffect(() => {
-        axios.get('http://localhost:5051/managerList')
+        axios.get('http://localhost:4000/managerList')
             .then(res => {
                 setManagers(res.data.data)
             })
@@ -43,10 +43,11 @@ export default function ManagerList() {
                                 filteredList.map((item, index) => {
                                     return (
                                         <tr key={index}>
-                                            <th scope="row">{item.id}</th>
+                                            {/* <th scope="row">{item.id}</th> */}
+                                            <th>{index+1}</th>
                                             <td>{item.name}</td>
                                             <td>{item.email}</td>
-                                            <td><Link to={`/adminHome/managerList/userList/${item.id}`}><button className='btn btn-outline-success btn-sm' id={item.id}>Assign User</button></Link></td>
+                                            <td><Link to={`/adminHome/managerList/userList/${item._id}`}><button className='btn btn-outline-success btn-sm' id={item._id}>Assign User</button></Link></td>
                                         </tr>
                                     )
                                 }) : (

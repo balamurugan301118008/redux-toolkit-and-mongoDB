@@ -59,7 +59,7 @@ export default function AdminAndManagerRegister() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            axios.post('http://localhost:5051/adminOrManagerRegister', formData)
+            axios.post('http://localhost:4000/adminOrManagerRegister', formData)
                 .then(res => {
                     if (res.data.Status == "Success") {
                         notification.success({ description: "You're Successfully Registered" })
