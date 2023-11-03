@@ -9,6 +9,7 @@ export default function UsersList() {
     useEffect(() => {
         axios.get('http://localhost:4000/adminHome/usersList')
             .then(res => {
+                console.log(res);
                 if (res.data.Status === "Success") {
                     setUserList(res.data.data)
                     navigate('/adminHome/usersList');
