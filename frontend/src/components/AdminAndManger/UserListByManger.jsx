@@ -10,9 +10,10 @@ export default function UserListByManger() {
     const { id } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:5051/usersList/${id}`)
+        axios.get(`http://localhost:4000/usersList/${id}`)
             .then(res => {
-                setUsers(res.data.finalArray)
+                console.log(res);
+                setUsers(res.data.data)
 
             })
             .catch(err => console.log(err))
@@ -24,7 +25,7 @@ export default function UserListByManger() {
             managerId: id,
             userId: e.target.id
         }
-        axios.post('http://localhost:5051/adminHome/managerList', payload)
+        axios.post('http://localhost:4000/adminHome/managerList', payload)
             .then(res => {
                 console.log(res);
                 if (res.data.Status === "Success") {
@@ -71,8 +72,8 @@ export default function UserListByManger() {
                             {filteredList.length > 0 ?
                                 filteredList.map((user, index) => {
                                     return (
-                                        <tr key={index}>
-                                            <th scope="row">{user.id}</th>
+                                        <tr key={index+1}>
+                                            <th scope="row">{user._id}</th>
                                             <td>{user.user_name}</td>
                                             <td>{user.email}</td>
                                             <td><input type='button' value={user.status ? "UnAssign" : "Assign"} className={user.status ? "btn btn-outline-danger btn-sm" : "btn btn-outline-success btn-sm"} id={user.id} onClick={handleUserAssign}></input></td>
