@@ -144,9 +144,10 @@ export default function ViewTasks() {
                             <p><span className='text-white'>Task Name : </span>{item.taskName}</p>
                             <p><span className='text-white'>Description : </span>{item.description}</p>
                             <p><span className='text-white'>Status: </span>{item.status}</p>
-                            <p><span className='text-white'>Started On : </span>{item.startedAt}</p>
-                            <p><span className='text-white'>Ended On : </span>{item.endedAt}</p>
-                            <p><span className='text-white'>TimeLimit: </span> {item.timeLimit} days</p>
+                            <p>{item.startedAt !== undefined ? (<p><span className='text-white'>Started On : </span>{item.startedAt}</p>) : null}</p>
+                            <p>{item.endedAt !== undefined ? (<p><span className='text-white'>Ended On : </span>{item.endedAt}</p>) : null}</p>
+                            <p>{item.timeLimit != undefined ? <p className='text-white'>{item.timeLimit >= 2 ?'No.Of.Days':'No.Of.Day'}:<span className={item.timeLimit>2?'text-success':'text-danger'}> {item.timeLimit}</span></p> : null}</p>
+                            <p><span className='text-white'>Completed On:</span>{item.status == "Completed" ? (<span>{item.updatedAt}</span>) : (<span className='text-danger'> Not completed yet</span>)}</p>
                             <button onClick={handleDeleteTask} id={item._id} className='btn btn-outline-danger btn-sm'>Delete</button>
                         </div>
                     ) : (<div>
