@@ -61,8 +61,6 @@ export default function ViewTasks() {
             const timeDifference = new Date(deadline.endDate) - new Date(deadline.startDate)
             const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
             const TaskData = { ...formData, deadline: { ...deadline, }, timeLimit: daysDifference };
-            // const TaskData = { ...formData, deadline: { ...deadline } };
-            // console.log(TaskData);
             axios.post(`http://localhost:4000/managerHome/viewTasks/${id}`, TaskData, { headers: { Authorization: `Bearer ${token}` } })
                 .then(res => {
                     if (res.data.Status === "Success") {
@@ -71,6 +69,13 @@ export default function ViewTasks() {
                             description: '',
                             status: '',
                         })
+                        setDeadline({
+                            startDate: '',
+                            endDate: '',
+                        })
+                        // setDeadline({
+                        //     endDate: '',
+                        // })
                         notification.success({ description: 'Task Successfully added for the user' })
                         // console.log("Task added succcessful");
                     }
@@ -141,7 +146,7 @@ export default function ViewTasks() {
                             <p><span className='text-white'>Status: </span>{item.status}</p>
                             <p><span className='text-white'>Started On : </span>{item.startedAt}</p>
                             <p><span className='text-white'>Ended On : </span>{item.endedAt}</p>
-                            <p><span className='text-white'>TimeLimit:</span> {item.timeLimit} days</p>
+                            <p><span className='text-white'>TimeLimit: </span> {item.timeLimit} days</p>
                             <button onClick={handleDeleteTask} id={item._id} className='btn btn-outline-danger btn-sm'>Delete</button>
                         </div>
                     ) : (<div>
@@ -162,7 +167,7 @@ export default function ViewTasks() {
                 </div>
                 <div className="form-floating mb-3">
                     <select name='status' onChange={handleChange} value={formData.status} className="form-select w-100" id="floatingSelect" aria-label="Floating label select example">
-                        <option value="Status">Status</option>
+                        <option value="None">None</option>
                         <option value="Pending">Pending</option>
                         <option value="Started">Started</option>
                         <option value="Progress">Progress</option>
