@@ -108,7 +108,7 @@ export default function UserHome() {
       setIsModalOpen(false);
     }
     else {
-      console.log("not okay");
+      console.log("Your task not added");
     }
   }
 
@@ -116,6 +116,7 @@ export default function UserHome() {
   useEffect(() => {
     axios.get('http://localhost:4000/userHome', { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => {
+        // console.log(res.data.tasks);
         if (res.data.Status === "Success") {
           setName(res.data.data[0].name);
           setStoreData(res.data.tasks)
@@ -242,18 +243,18 @@ export default function UserHome() {
                 <p><span className='text-white'>Task Name : </span>{item.taskName}</p>
                 <p><span className='text-white'>Description : </span>{item.description}</p>
                 <p><span className='text-white'>Status: </span>{item.status}</p>
-                <p><span className='text-white'>Started On : </span>{item.startedAt}</p>
-                <p><span className='text-white'>Ended On : </span>{item.endedAt}</p>
-                {/* <p><span className='text-white'>TimeLimit On : </span>{} days</p> */}
+                <p>{item.startedAt !== undefined ? (<p><span className='text-white'>Started On : </span>{item.startedAt}</p>) : null}</p>
+                <p>{item.endedAt !== undefined ? (<p><span className='text-white'>Ended On : </span>{item.endedAt}</p>) : null}</p>
                 <div className='d-flex justify-content-start gap-3'>
-                  <p className='text-white'>{item.timeLimit >= 2 ? 'TotalDays' : 'TotalDay'}:</p><span className={item.timeLimit > 2 ? 'text-success' : 'text-danger'}>{item.timeLimit}</span>
+                  <p>{item.timeLimit != undefined ? <p className='text-white'>{item.timeLimit >= 2 ? 'No.Of.Days' : 'No.Of.Day'}:<span className={item.timeLimit > 2 ? 'text-success' : 'text-danger'}> {item.timeLimit}</span></p> : null}</p>
                   <Link to={`/userHome/${item._id}`}><button type="button" id={item._id} className="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter">Delete</button></Link>
                   <Link to={`/userHome/editTask/${item._id}`}><button id={item._id} className='btn btn-outline-success btn-sm'>Edit</button></Link>
                 </div>
+                <p><span className='text-white'>Completed On:</span>{item.status == "Completed" ? (<span> {item.updatedAt}</span>) : (<span> You are not completed yet</span>)}</p>
               </div>
             )) : (
             <div>
-              <h3 className='text-danger'>{searchText} not found.</h3>
+              <h3 className='text-danger'>{searchText} No tasks yet </h3>
             </div>
           )
         }
