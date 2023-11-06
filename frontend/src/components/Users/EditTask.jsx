@@ -71,7 +71,7 @@ function EditTask() {
                 <Link to='/userHome'><button className='btn btn-outline-primary'>Back to UserHomePage</button></Link>
             </div>
             <div className='wd-25 container'>
-                <div>{addedBy.length >= 0 ? <form onSubmit={handleUpdateTask}>
+                <div>{addedBy ? <form onSubmit={handleUpdateTask}>
                     <div className="mb-3">
                         <label className="form-label">Task Name</label>
                         <input type="text" className="form-control" value={taskName} name='taskName' />
