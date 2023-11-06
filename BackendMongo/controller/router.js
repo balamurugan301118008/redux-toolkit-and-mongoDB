@@ -331,6 +331,9 @@ Router.post('/userHome/editTask/:id', async (req, res) => {
     if (!update) {
         res.send({ Error: "Your data not updated" })
     }
+    else if(update.status == "Completed"){
+        res.send({ Status:"Successfully completed", data:update})
+    }
     else {
         res.send({ Status: "Success", data: update });
     }
