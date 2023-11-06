@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button, Modal, DatePicker, notification } from "antd";
+
 function EditTask() {
     const [addedBy, setAddedBy] = useState('');
     const [taskName, setTaskName] = useState('');
@@ -57,7 +58,6 @@ function EditTask() {
                     naviagate("/userHome")
                 }
                 else if (res.data.Status == "Successfully completed") {
-                    console.log("Hey buddy")
                     naviagate("/userHome")
                 }
             })

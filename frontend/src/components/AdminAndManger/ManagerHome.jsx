@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Button, Modal, DatePicker, notification } from "antd";
 
 export default function ManagerHome() {
-  const token = useSelector((state) => state.userData.initialState.token)
+  const token = useSelector((state) => state.userData.reducer.initialState.token)
+  // const token = useSelector((state) => state.userData.initialState.token)
   const [name, setName] = useState('')
   const navigate = useNavigate();
   const [managerId, setId] = useState('')
@@ -70,13 +71,13 @@ export default function ManagerHome() {
                 filteredList.map((item, index) => {
                   return (
                     <tr key={index}>
-                      <th scope="row">{index+1}</th>
+                      <th scope="row">{index + 1}</th>
                       <td>{item.name}</td>
                       <td>{item.email}</td>
                       <td><Link to={`/managerHome/viewTasks/${item._id}`}><button className='btn btn-outline-success btn-sm' id={item._id} data-set={managerId}>View Task</button></Link></td>
                     </tr>
                   )
-                }) : (  
+                }) : (
                   <tr>
                     <td className='text-danger'>{searchText} not found</td>
                   </tr>

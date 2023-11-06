@@ -11,6 +11,7 @@ app.use(cors({
     methods: ["POST", "GET"],
     credentials: true,
 }));
+
 app.use(bodyParser.json());
 const PORT = 4000;
 const hostName = 'localhost'

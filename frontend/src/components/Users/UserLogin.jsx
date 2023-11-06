@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { LoginUser } from '../Reducer/Reducer';
+import { LoginUser } from '../Reducer/Reducer.jsx';
 import { useDispatch } from 'react-redux'
 import { Button, Modal, DatePicker, notification } from "antd";
 

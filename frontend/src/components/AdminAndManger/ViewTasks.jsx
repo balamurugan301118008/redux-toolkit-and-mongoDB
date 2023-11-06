@@ -5,7 +5,7 @@ import { Button, Modal, DatePicker, notification } from "antd";
 import { useSelector } from 'react-redux';
 
 export default function ViewTasks() {
-    const token = useSelector((state) => state.userData.initialState.token)
+    const token = useSelector((state) => state.userData.reducer.initialState.token)
     const [taskList, setTaskList] = useState([]);
     const [searchText, setSearchText] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false);
