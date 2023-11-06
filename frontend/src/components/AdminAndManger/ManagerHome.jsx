@@ -18,7 +18,6 @@ export default function ManagerHome() {
   useEffect(() => {
     axios.get("http://localhost:4000/managerHome", { headers: { Authorization: `Bearer ${token}` } })
       .then(res => {
-        console.log(res.data)
         if (res.data.Status === "Success") {
           setName(res.data.data[0].name)
           setId(res.data.data[0]._id)
