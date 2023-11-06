@@ -5,7 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Button, Modal, DatePicker, notification } from "antd";
 
 export default function AdminHome() {
-  const token = useSelector((state) => state.userData.initialState.token)
+  const token = useSelector((state) => state.userData.reducer.initialState.token)
+  // const token = useSelector((state) => state.userData.initialState.token)
   const [name, setAdminName] = useState('')
   const navigate = useNavigate();
   useEffect(() => {

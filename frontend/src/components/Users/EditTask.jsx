@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Button, Modal, DatePicker, notification } from "antd";
+
 function EditTask() {
     const [addedBy, setAddedBy] = useState('');
     const [taskName, setTaskName] = useState('');
@@ -57,7 +58,6 @@ function EditTask() {
                     naviagate("/userHome")
                 }
                 else if (res.data.Status == "Successfully completed") {
-                    console.log("Hey buddy")
                     naviagate("/userHome")
                 }
             })
@@ -71,7 +71,7 @@ function EditTask() {
                 <Link to='/userHome'><button className='btn btn-outline-primary'>Back to UserHomePage</button></Link>
             </div>
             <div className='wd-25 container'>
-                <div>{addedBy.length >= 0 ? <form onSubmit={handleUpdateTask}>
+                <div>{addedBy ? <form onSubmit={handleUpdateTask}>
                     <div className="mb-3">
                         <label className="form-label">Task Name</label>
                         <input type="text" className="form-control" value={taskName} name='taskName' />

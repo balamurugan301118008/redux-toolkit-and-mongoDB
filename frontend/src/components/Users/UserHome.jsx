@@ -11,7 +11,8 @@ import moment from 'moment'
 
 export default function UserHome() {
   const [date, setDate] = useState(null)
-  const token = useSelector((state) => state.userData.initialState.token)
+  const token = useSelector((state) => state.userData.reducer.initialState.token)
+  // console.log(token);
   const [searchText, setSearchText] = useState('')
   const [name, setName] = useState('');
   const navigate = useNavigate();
